@@ -58,7 +58,7 @@ public class Board {
             this.col = boardCell.col;
             if (boardCell.bead != null)
                 bead = new Bead(boardCell.bead);
-            neighbors = new HashMap<>(boardCell.neighbors);
+            neighbors = new HashMap<>();
         }
 
         void addNeighbor(BoardCell cell, NeighborType type) {
@@ -224,6 +224,41 @@ public class Board {
         for (i = 0; i < totalRowsCount; i++) {
             rows[i] = new BoardRow(board.rows[i]);
         }
+
+        //        left and right neighbor
+        for (i = 0; i < totalRowsCount; i++) {
+            for (int j = 0; j < rows[i].size - 1; j++) {
+                rows[i].boardCells[j].addNeighbor(rows[i].boardCells[j + 1], NeighborType.right);
+            }
+        }
+
+//        down right and top left neighbor
+        for (i = 0; i < totalRowsCount - 5; i++) {
+            for (int j = 0; j < rows[i].size; j++) {
+                rows[i].boardCells[j].addNeighbor(rows[i + 1].boardCells[j + 1], NeighborType.downRight);
+            }
+        }
+        for (; i < totalRowsCount - 1; i++) {
+            for (int j = 0; j < rows[i].size - 1; j++) {
+                rows[i].boardCells[j].addNeighbor(rows[i + 1].boardCells[j], NeighborType.downRight);
+            }
+        }
+
+//        down left and top right
+        for (i = 0; i < totalRowsCount - 5; i++) {
+            for (int j = 0; j < rows[i].size; j++) {
+                rows[i].boardCells[j].addNeighbor(rows[i + 1].boardCells[j], NeighborType.downLeft);
+            }
+        }
+        for (; i < totalRowsCount - 1; i++) {
+            for (int j = 1; j < rows[i].size; j++) {
+                rows[i].boardCells[j].addNeighbor(rows[i + 1].boardCells[j - 1], NeighborType.downLeft);
+            }
+        }
+
+//        clear center of board
+        rows[4].boardCells[4].removeNeighbors();
+
     }
 
     public void print() {
