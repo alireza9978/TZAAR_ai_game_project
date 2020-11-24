@@ -26,7 +26,7 @@ public class Ai extends Player {
                     if (copyGame.applyActionTwo(this, action, true)) {
                         continue;
                     }
-                    Player winner = game.getWinner();
+                    Player winner = copyGame.getWinner();
                     if (winner != null) {
                         if (winner.getType() == getType()) {
                             return action;
@@ -52,7 +52,7 @@ public class Ai extends Player {
                     if (copyGame.applyActionTwo(this, action, true)) {
                         continue;
                     }
-                    Player winner = game.getWinner();
+                    Player winner = copyGame.getWinner();
                     if (winner != null) {
                         if (winner.getType() == getType()) {
                             return action;
@@ -85,7 +85,7 @@ public class Ai extends Player {
             if (copyGame.applyActionTwo(this, action, false)) {
                 continue;
             }
-            Player winner = game.getWinner();
+            Player winner = copyGame.getWinner();
             if (winner != null) {
                 if (winner.getType() == getType()) {
                     return action;
@@ -115,7 +115,7 @@ public class Ai extends Player {
                 if (copyGame.applyActionTwo(this, action, true)) {
                     continue;
                 }
-                Player winner = game.getWinner();
+                Player winner = copyGame.getWinner();
                 if (winner != null) {
                     if (winner.getType() == getType()) {
                         return Integer.MAX_VALUE;
@@ -140,7 +140,7 @@ public class Ai extends Player {
             if (copyGame.applyActionTwo(this, action, false)) {
                 continue;
             }
-            Player winner = game.getWinner();
+            Player winner = copyGame.getWinner();
             if (winner != null) {
                 if (winner.getType() == getType()) {
                     return Integer.MAX_VALUE;
@@ -165,7 +165,7 @@ public class Ai extends Player {
                 if (copyGame.applyActionTwo(this, action, true)) {
                     continue;
                 }
-                Player winner = game.getWinner();
+                Player winner = copyGame.getWinner();
                 if (winner != null) {
                     if (winner.getType() == getType().reverse()) {
                         return Integer.MIN_VALUE;
@@ -191,7 +191,7 @@ public class Ai extends Player {
             if (copyGame.applyActionTwo(this, action, false)) {
                 continue;
             }
-            Player winner = game.getWinner();
+            Player winner = copyGame.getWinner();
             if (winner != null) {
                 if (winner.getType() == getType().reverse()) {
                     return Integer.MIN_VALUE;
