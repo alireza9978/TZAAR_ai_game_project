@@ -23,7 +23,7 @@ public class Ai extends Player {
             for (Action action : actions) {
                 if (action.getType() == Action.ActionType.attack) {
                     Game copyGame = game.copy();
-                    if (copyGame.applyActionTwo(this, action, false)) {
+                    if (copyGame.applyActionTwo(this, action, true)) {
                         continue;
                     }
                     Player winner = game.getWinner();
@@ -49,7 +49,7 @@ public class Ai extends Player {
             for (Action action : actions) {
                 if (action.getType() == Action.ActionType.attack) {
                     Game copyGame = game.copy();
-                    if (copyGame.applyActionTwo(this, action, false)) {
+                    if (copyGame.applyActionTwo(this, action, true)) {
                         continue;
                     }
                     Player winner = game.getWinner();
@@ -162,7 +162,7 @@ public class Ai extends Player {
         for (Action action : actions) {
             if (action.getType() == Action.ActionType.attack) {
                 Game copyGame = game.copy();
-                if (copyGame.applyActionTwo(this, action, false)) {
+                if (copyGame.applyActionTwo(this, action, true)) {
                     continue;
                 }
                 Player winner = game.getWinner();
@@ -171,7 +171,7 @@ public class Ai extends Player {
                         return Integer.MIN_VALUE;
                     }
                 } else {
-                    minValue = Math.max(minValue, minSecondAttack(game, depth + 1));
+                    minValue = Math.max(minValue, minSecondMove(game, depth + 1));
                 }
             }
         }
@@ -179,7 +179,7 @@ public class Ai extends Player {
 
     }
 
-    private int minSecondAttack(Game game, int depth) {
+    private int minSecondMove(Game game, int depth) {
         if (depth == maxDepth) {
             return eval(game);
         }
