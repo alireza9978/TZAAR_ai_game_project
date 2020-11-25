@@ -171,7 +171,7 @@ public class Ai extends Player {
                         return Integer.MIN_VALUE;
                     }
                 } else {
-                    minValue = Math.max(minValue, minSecondMove(game, depth + 1));
+                    minValue = Math.min(minValue, minSecondMove(game, depth + 1));
                 }
             }
         }
@@ -197,7 +197,7 @@ public class Ai extends Player {
                     return Integer.MIN_VALUE;
                 }
             } else {
-                minValue = Math.max(minValue, maxForceAttack(game, depth + 1));
+                minValue = Math.min(minValue, maxForceAttack(game, depth + 1));
             }
         }
 
