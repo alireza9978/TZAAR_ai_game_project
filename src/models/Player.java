@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Player {
 
-    private PlayerType type;
-    private ArrayList<Bead> allBead;
+    private final PlayerType type;
 
     @Override
     public String toString() {
@@ -15,24 +14,11 @@ public abstract class Player {
     }
 
     public Player(PlayerType type) {
-        allBead = new ArrayList<>();
         this.type = type;
     }
 
     public PlayerType getType() {
         return type;
-    }
-
-    public void addBead(Bead bead) {
-        allBead.add(bead);
-    }
-
-    public void removeBead(Bead bead) {
-        allBead.remove(bead);
-    }
-
-    public ArrayList<Bead> getAllBead() {
-        return allBead;
     }
 
     public abstract Action forceAttack(Game game);

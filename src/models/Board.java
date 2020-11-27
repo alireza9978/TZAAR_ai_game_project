@@ -80,26 +80,19 @@ public class Board {
         right, left, topRight, topLeft, downRight, downLeft;
 
         public NeighborType reverse() {
-            switch (this) {
-                case right:
-                    return left;
-                case left:
-                    return right;
-                case topRight:
-                    return downLeft;
-                case topLeft:
-                    return downRight;
-                case downRight:
-                    return topLeft;
-                case downLeft:
-                    return topRight;
-            }
-            return null;
+            return switch (this) {
+                case right -> left;
+                case left -> right;
+                case topRight -> downLeft;
+                case topLeft -> downRight;
+                case downRight -> topLeft;
+                case downLeft -> topRight;
+            };
         }
 
     }
 
-    private BoardRow[] rows;
+    private final BoardRow[] rows;
     private static final int totalRowsCount = 9;
 
     Board(Player black, Player white) {
@@ -161,7 +154,7 @@ public class Board {
         for (i = 1; i < rows[totalRowsCount - 1].size; i++) {
             rows[totalRowsCount - 1].boardCells[i].bead = new Bead(BeadType.Totts, white);
         }
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < 4; i++) {
             rows[i].boardCells[rows[i].size - 1].bead = new Bead(BeadType.Totts, white);
         }
         for (; i < totalRowsCount - 1; i++) {
@@ -177,7 +170,7 @@ public class Board {
             rows[i].boardCells[1].bead = new Bead(BeadType.Tzarras, white);
         }
         for (; i < totalRowsCount - 1; i++) {
-            rows[i].boardCells[1].bead = new Bead(BeadType.Tzaars, black);
+            rows[i].boardCells[1].bead = new Bead(BeadType.Tzarras, black);
         }
         for (i = 2; i < rows[totalRowsCount - 2].size - 1; i++) {
             rows[totalRowsCount - 2].boardCells[i].bead = new Bead(BeadType.Tzarras, white);
@@ -202,7 +195,7 @@ public class Board {
         for (i = 3; i < rows[totalRowsCount - 3].size - 2; i++) {
             rows[totalRowsCount - 3].boardCells[i].bead = new Bead(BeadType.Tzaars, white);
         }
-        for (i = 2; i < 5; i++) {
+        for (i = 2; i < 4; i++) {
             rows[i].boardCells[rows[i].size - 3].bead = new Bead(BeadType.Tzaars, white);
         }
         for (; i < totalRowsCount - 3; i++) {
@@ -215,7 +208,6 @@ public class Board {
         rows[4].boardCells[5].bead = new Bead(BeadType.Totts, black);
         rows[5].boardCells[3].bead = new Bead(BeadType.Totts, black);
         rows[5].boardCells[4].bead = new Bead(BeadType.Totts, white);
-
     }
 
     Board(Board board) {
@@ -321,15 +313,9 @@ public class Board {
                 continue;
             }
             switch (bead.getType()) {
-                case Tzaars:
-                    System.out.print("A ");
-                    break;
-                case Tzarras:
-                    System.out.print("B ");
-                    break;
-                case Totts:
-                    System.out.print("C ");
-                    break;
+                case Tzaars -> System.out.print("A ");
+                case Tzarras -> System.out.print("B ");
+                case Totts -> System.out.print("C ");
             }
 
         }
@@ -366,10 +352,6 @@ public class Board {
 
     public BoardRow[] getRows() {
         return rows;
-    }
-
-    public static int getTotalRowsCount() {
-        return totalRowsCount;
     }
 
     static boolean isTherePath(Board.BoardCell start, Board.BoardCell target) {

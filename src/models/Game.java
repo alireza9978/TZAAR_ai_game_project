@@ -4,9 +4,9 @@ import static models.Board.isTherePath;
 
 public class Game {
 
-    private Player white;
-    private Player black;
-    private Board board;
+    private final Player white;
+    private final Player black;
+    private final Board board;
 
     public Game(Player whitePlayer, Player blackPlayer) {
         this.white = whitePlayer;
@@ -93,40 +93,32 @@ public class Game {
     }
 
     public Player getWinner() {
-        boolean one = false, two = false, three = false;
-        for (Bead bead : white.getAllBead()) {
-            switch (bead.getType()) {
-                case Tzaars:
-                    one = true;
-                    break;
-                case Tzarras:
-                    two = true;
-                    break;
-                case Totts:
-                    three = true;
-                    break;
+        boolean oneWhite = false, twoWhite = false, threeWhite = false;
+        boolean oneBlack = false, twoBlack = false, threeBlack = false;
+        for (Board.BoardRow row : board.getRows()) {
+            for (Board.BoardCell cell : row.boardCells) {
+                Bead bead = cell.bead;
+                if (bead != null) {
+                    if (bead.getPlayer().getType() == PlayerType.white) {
+                        switch (bead.getType()) {
+                            case Tzaars -> oneWhite = true;
+                            case Tzarras -> twoWhite = true;
+                            case Totts -> threeWhite = true;
+                        }
+                    } else {
+                        switch (bead.getType()) {
+                            case Tzaars -> oneBlack = true;
+                            case Tzarras -> twoBlack = true;
+                            case Totts -> threeBlack = true;
+                        }
+                    }
+                }
             }
         }
-        if (!(one && two && three)) {
+        if (!(oneWhite && twoWhite && threeWhite)) {
             return black;
         }
-        one = false;
-        two = false;
-        three = false;
-        for (Bead bead : black.getAllBead()) {
-            switch (bead.getType()) {
-                case Tzaars:
-                    one = true;
-                    break;
-                case Tzarras:
-                    two = true;
-                    break;
-                case Totts:
-                    three = true;
-                    break;
-            }
-        }
-        if (!(one && two && three)) {
+        if (!(oneBlack && twoBlack && threeBlack)) {
             return white;
         }
         return null;
@@ -161,18 +153,15 @@ public class Game {
         }
 
         if (isTherePath(action.getStart(), action.getTarget())) {
+            Bead start = board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead;
             if (action.getType() == Action.ActionType.reinforce) {
-                Bead start = board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead;
-                player.removeBead(start);
                 board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead = null;
                 board.getRows()[action.getTarget().row].boardCells[action.getTarget().col].bead.addBead(start);
             } else {
-                Bead start = board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead;
                 Bead target = board.getRows()[action.getTarget().row].boardCells[action.getTarget().col].bead;
                 if (start.getHeight() < target.getHeight()) {
                     return true;
                 }
-                player.removeBead(start);
                 board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead = null;
                 board.getRows()[action.getTarget().row].boardCells[action.getTarget().col].bead = start;
             }
@@ -209,18 +198,15 @@ public class Game {
         }
 
         if (isTherePath(action.getStart(), action.getTarget())) {
+            Bead start = board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead;
             if (action.getType() == Action.ActionType.reinforce) {
-                Bead start = board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead;
-                player.removeBead(start);
                 board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead = null;
                 board.getRows()[action.getTarget().row].boardCells[action.getTarget().col].bead.addBead(start);
             } else {
-                Bead start = board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead;
                 Bead target = board.getRows()[action.getTarget().row].boardCells[action.getTarget().col].bead;
                 if (start.getHeight() < target.getHeight()) {
                     return true;
                 }
-                player.removeBead(start);
                 board.getRows()[action.getStart().row].boardCells[action.getStart().col].bead = null;
                 board.getRows()[action.getTarget().row].boardCells[action.getTarget().col].bead = start;
             }
@@ -237,11 +223,4 @@ public class Game {
         return board;
     }
 
-    public void setWhite(Player white) {
-        this.white = white;
-    }
-
-    public void setBlack(Player black) {
-        this.black = black;
-    }
 }

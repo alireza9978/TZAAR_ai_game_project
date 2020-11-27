@@ -6,9 +6,9 @@ public class Action {
         reinforce, attack, nothing
     }
 
-    private ActionType type;
-    private Board.BoardCell start;
-    private Board.BoardCell target;
+    private final ActionType type;
+    private final Board.BoardCell start;
+    private final Board.BoardCell target;
 
     public Action(ActionType type, Board.BoardCell start, Board.BoardCell target) {
         this.type = type;
@@ -20,24 +20,12 @@ public class Action {
         return type;
     }
 
-    public void setType(ActionType type) {
-        this.type = type;
-    }
-
     public Board.BoardCell getStart() {
         return start;
     }
 
-    public void setStart(Board.BoardCell start) {
-        this.start = start;
-    }
-
     public Board.BoardCell getTarget() {
         return target;
-    }
-
-    public void setTarget(Board.BoardCell target) {
-        this.target = target;
     }
 
     @Override

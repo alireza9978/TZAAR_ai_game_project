@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Ai extends Player {
 
     private int doneActions = 0;
-    private int maxDepth = 100;
+    private final int maxDepth = 2;
 
     public Ai(PlayerType type) {
         super(type);
@@ -16,10 +16,10 @@ public class Ai extends Player {
 
     @Override
     public Action forceAttack(Game game) {
+        int maxValue = Integer.MIN_VALUE;
+        Action bestAction = null;
+        ArrayList<Action> actions = getAllActions(game.getBoard());
         if (doneActions == 0 && getType() == PlayerType.white) {
-            int maxValue = Integer.MIN_VALUE;
-            Action bestAction = null;
-            ArrayList<Action> actions = getAllActions(game.getBoard());
             for (Action action : actions) {
                 if (action.getType() == Action.ActionType.attack) {
                     Game copyGame = game.copy();
@@ -40,12 +40,7 @@ public class Ai extends Player {
                     }
                 }
             }
-            doneActions++;
-            return bestAction;
         } else {
-            int maxValue = Integer.MIN_VALUE;
-            Action bestAction = null;
-            ArrayList<Action> actions = getAllActions(game.getBoard());
             for (Action action : actions) {
                 if (action.getType() == Action.ActionType.attack) {
                     Game copyGame = game.copy();
@@ -66,9 +61,9 @@ public class Ai extends Player {
                     }
                 }
             }
-            doneActions++;
-            return bestAction;
         }
+        doneActions++;
+        return bestAction;
     }
 
     private int eval(Game game) {

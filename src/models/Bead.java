@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Bead {
 
     private BeadType type;
-    private Player player;
+    private final Player player;
     private int height = 1;
 
     @Override
@@ -20,7 +20,6 @@ public class Bead {
     public Bead(BeadType type, Player player) {
         this.type = type;
         this.player = player;
-        player.addBead(this);
     }
 
     public Bead(Bead bead) {
@@ -61,23 +60,12 @@ public class Bead {
         return type;
     }
 
-    public void setType(BeadType type) {
-        this.type = type;
-    }
-
     public Player getPlayer() {
         return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
 }
