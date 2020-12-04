@@ -32,7 +32,7 @@ public class Ai extends Player {
                             return action;
                         }
                     } else {
-                        int temp = Math.max(maxValue, minForceAttack(game, 0));
+                        int temp = Math.max(maxValue, minForceAttack(copyGame, 0));
                         if (temp > maxValue) {
                             maxValue = temp;
                             bestAction = action;
@@ -53,7 +53,7 @@ public class Ai extends Player {
                             return action;
                         }
                     } else {
-                        int temp = Math.max(maxValue, maxSecondMove(game, 0));
+                        int temp = Math.max(maxValue, maxSecondMove(copyGame, 0));
                         if (temp > maxValue) {
                             maxValue = temp;
                             bestAction = action;
@@ -86,7 +86,7 @@ public class Ai extends Player {
                     return action;
                 }
             } else {
-                int temp = Math.max(maxValue, minForceAttack(game, 0));
+                int temp = Math.max(maxValue, minForceAttack(copyGame, 0));
                 if (temp > maxValue) {
                     maxValue = temp;
                     bestAction = action;
@@ -139,9 +139,11 @@ public class Ai extends Player {
             if (winner != null) {
                 if (winner.getType() == getType()) {
                     return Integer.MAX_VALUE;
+                }else {
+                    return Integer.MIN_VALUE;
                 }
             } else {
-                maxValue = Math.max(maxValue, minForceAttack(game, depth + 1));
+                maxValue = Math.max(maxValue, minForceAttack(copyGame, depth + 1));
             }
         }
         return maxValue;
@@ -166,7 +168,7 @@ public class Ai extends Player {
                         return Integer.MIN_VALUE;
                     }
                 } else {
-                    minValue = Math.min(minValue, minSecondMove(game, depth + 1));
+                    minValue = Math.min(minValue, minSecondMove(copyGame, depth + 1));
                 }
             }
         }
@@ -190,9 +192,11 @@ public class Ai extends Player {
             if (winner != null) {
                 if (winner.getType() == getType().reverse()) {
                     return Integer.MIN_VALUE;
+                }else {
+                    return Integer.MAX_VALUE;
                 }
             } else {
-                minValue = Math.min(minValue, maxForceAttack(game, depth + 1));
+                minValue = Math.min(minValue, maxForceAttack(copyGame, depth + 1));
             }
         }
 
