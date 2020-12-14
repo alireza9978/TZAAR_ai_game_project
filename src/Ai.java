@@ -101,7 +101,6 @@ public class Ai extends Player {
         if (depth == maxDepth) {
             return eval(game);
         }
-
         int maxValue = Integer.MIN_VALUE;
         ArrayList<Action> actions = getAllActions(game.getBoard());
         for (Action action : actions) {
@@ -127,7 +126,6 @@ public class Ai extends Player {
         if (depth == maxDepth) {
             return eval(game);
         }
-
         int maxValue = Integer.MIN_VALUE;
         ArrayList<Action> actions = getAllActions(game.getBoard());
         for (Action action : actions) {
@@ -139,7 +137,7 @@ public class Ai extends Player {
             if (winner != null) {
                 if (winner.getType() == getType()) {
                     return Integer.MAX_VALUE;
-                }else {
+                } else {
                     return Integer.MIN_VALUE;
                 }
             } else {
@@ -153,13 +151,13 @@ public class Ai extends Player {
         if (depth == maxDepth) {
             return eval(game);
         }
-
+        Player opp = getOpp(game);
         int minValue = Integer.MAX_VALUE;
-        ArrayList<Action> actions = getAllActions(game.getBoard());
+        ArrayList<Action> actions = opp.getAllActions(game.getBoard());
         for (Action action : actions) {
             if (action.getType() == Action.ActionType.attack) {
                 Game copyGame = game.copy();
-                if (copyGame.applyActionTwo(this, action, true)) {
+                if (copyGame.applyActionTwo(opp, action, true)) {
                     continue;
                 }
                 Player winner = copyGame.getWinner();
@@ -181,18 +179,19 @@ public class Ai extends Player {
             return eval(game);
         }
 
+        Player opp = getOpp(game);
         int minValue = Integer.MAX_VALUE;
-        ArrayList<Action> actions = getAllActions(game.getBoard());
+        ArrayList<Action> actions = opp.getAllActions(game.getBoard());
         for (Action action : actions) {
             Game copyGame = game.copy();
-            if (copyGame.applyActionTwo(this, action, false)) {
+            if (copyGame.applyActionTwo(opp, action, false)) {
                 continue;
             }
             Player winner = copyGame.getWinner();
             if (winner != null) {
                 if (winner.getType() == getType().reverse()) {
                     return Integer.MIN_VALUE;
-                }else {
+                } else {
                     return Integer.MAX_VALUE;
                 }
             } else {
@@ -202,4 +201,13 @@ public class Ai extends Player {
 
         return minValue;
     }
+
+    public Player getOpp(Game game) {
+        if (getType() == PlayerType.white) {
+            return game.getBlack();
+        } else {
+            return game.getWhite();
+        }
+    }
+
 }

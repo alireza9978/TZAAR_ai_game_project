@@ -223,4 +223,11 @@ public class Game {
         return board;
     }
 
+    public Player getWhite() {
+        return white;
+    }
+
+    public Player getBlack() {
+        return black;
+    }
 }
