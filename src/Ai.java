@@ -1,9 +1,7 @@
-import models.Action;
-import models.Game;
-import models.Player;
-import models.PlayerType;
+import models.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Ai extends Player {
 
@@ -87,13 +85,17 @@ public class Ai extends Player {
                 }
             } else {
                 int temp = Math.max(maxValue, minForceAttack(copyGame, 0));
-                if (temp >= maxValue) {
+                if (temp > maxValue) {
                     maxValue = temp;
                     bestAction = action;
                 }
             }
         }
         doneActions++;
+        if (bestAction == null){
+            Random random = new Random();
+            return actions.get(random.nextInt(actions.size()));
+        }
         return bestAction;
     }
 
