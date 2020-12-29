@@ -33,7 +33,7 @@ public class Ai extends Player {
                         }
                     } else {
                         int temp = Math.max(maxValue, minForceAttack(copyGame, 0));
-                        if (temp > maxValue) {
+                        if (temp >= maxValue) {
                             maxValue = temp;
                             bestAction = action;
                         }
@@ -54,7 +54,7 @@ public class Ai extends Player {
                         }
                     } else {
                         int temp = Math.max(maxValue, maxSecondMove(copyGame, 0));
-                        if (temp > maxValue) {
+                        if (temp >= maxValue) {
                             maxValue = temp;
                             bestAction = action;
                         }
@@ -87,7 +87,7 @@ public class Ai extends Player {
                 }
             } else {
                 int temp = Math.max(maxValue, minForceAttack(copyGame, 0));
-                if (temp > maxValue) {
+                if (temp >= maxValue) {
                     maxValue = temp;
                     bestAction = action;
                 }
